@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment-2
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginxweb2
+  template:
+    metadata:
+      labels:
+        app: nginxweb2
+    spec:
+      containers:
+      - name: nginx
+        image: quay.io/redhattraining/hello-world-nginx:v1.0
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+          - name: nginx-index-config
+            mountPath: /usr/share/nginx/html/
+      volumes:
+      - name: nginx-index-config
+        configMap:
+          name: nginx-web2
